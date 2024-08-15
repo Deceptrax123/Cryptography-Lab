@@ -35,30 +35,23 @@ def sub_word(word):
 
 
 def pad_key(key, length=32):
-    # If key is longer than 32 bytes, truncate it
     if len(key) > length:
         return key[:length]
 
-    # If key is shorter than 32 bytes, pad with 0x00 bytes (or other scheme if necessary)
     return key.ljust(length, '\x00')
 
 
 def key_expansion(key):
-    # Pad the key to 32 bytes (AES-256)
     padded_key = pad_key(key)
 
-    # Convert the padded key to bytes (accepts any string with digits, letters, symbols)
-    # Convert characters to their byte values
     key_bytes = [ord(b) for b in padded_key]
 
     key_schedule = []
 
-    # Initialize the first Nk words of the expanded key with the cipher key
     for i in range(Nk):
         word = key_bytes[4 * i: 4 * (i + 1)]
         key_schedule.append(word)
 
-    # Start expanding the key schedule
     for i in range(Nk, Nb * (Nr + 1)):
         temp = key_schedule[i - 1]
         if i % Nk == 0:
