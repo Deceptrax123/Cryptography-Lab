@@ -42,13 +42,17 @@ def generate_keys(pq_given=True):
     if pq_given:
         p = 61
         q = 53
+        print("p: ",p)
+        print("q: ",q)
 
         n = p * q
 
         phi = (p - 1) * (q - 1)
     else:
         n=187
+        print("N: ",n)
         factors=generate_factors_n(n)
+        print("Prime Factors: ",factors)
         p=int(factors[0])
         q=int(factors[1])
 
@@ -78,6 +82,7 @@ if __name__ == "__main__":
     print("Private Key:", private_key)
 
     message = "Srinitish Srinivasan"
+    print("Plain Text: ",message)
     
     encrypted_message = encrypt_message(public_key, message)
     print("Encrypted Message:", encrypted_message)
